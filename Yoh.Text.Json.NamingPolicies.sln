@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yoh.Text.Json.NamingPolicie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yoh.Text.Json.NamingPolicies.Tests", "tests\Yoh.Text.Json.NamingPolicies.Tests.csproj", "{AD714304-AF95-4142-BE62-291C2054A255}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yoh.Text.Json.NamingPolicies.Benchmarks", "benches\Yoh.Text.Json.NamingPolicies.Benchmarks.csproj", "{9352D7A8-0919-47FB-AC9C-C9E29799E2E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{AD714304-AF95-4142-BE62-291C2054A255}.Release|x64.Build.0 = Release|Any CPU
 		{AD714304-AF95-4142-BE62-291C2054A255}.Release|x86.ActiveCfg = Release|Any CPU
 		{AD714304-AF95-4142-BE62-291C2054A255}.Release|x86.Build.0 = Release|Any CPU
+		{9352D7A8-0919-47FB-AC9C-C9E29799E2E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9352D7A8-0919-47FB-AC9C-C9E29799E2E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9352D7A8-0919-47FB-AC9C-C9E29799E2E1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9352D7A8-0919-47FB-AC9C-C9E29799E2E1}.Debug|x64.Build.0 = Debug|Any CPU
+		{9352D7A8-0919-47FB-AC9C-C9E29799E2E1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9352D7A8-0919-47FB-AC9C-C9E29799E2E1}.Debug|x86.Build.0 = Debug|Any CPU
+		{9352D7A8-0919-47FB-AC9C-C9E29799E2E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9352D7A8-0919-47FB-AC9C-C9E29799E2E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9352D7A8-0919-47FB-AC9C-C9E29799E2E1}.Release|x64.ActiveCfg = Release|Any CPU
+		{9352D7A8-0919-47FB-AC9C-C9E29799E2E1}.Release|x64.Build.0 = Release|Any CPU
+		{9352D7A8-0919-47FB-AC9C-C9E29799E2E1}.Release|x86.ActiveCfg = Release|Any CPU
+		{9352D7A8-0919-47FB-AC9C-C9E29799E2E1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
