@@ -8,10 +8,10 @@ namespace Yoh.Text.Json.NamingPolicies
         private const char SnakeWordBoundary = '_';
         private const char KebabWordBoundary = '-';
 
-        private static JsonNamingPolicy _snakeLowerCase;
-        private static JsonNamingPolicy _snakeUpperCase;
-        private static JsonNamingPolicy _kebabLowerCase;
-        private static JsonNamingPolicy _kebabUpperCase;
+        private static JsonNamingPolicy? _snakeLowerCase;
+        private static JsonNamingPolicy? _snakeUpperCase;
+        private static JsonNamingPolicy? _kebabLowerCase;
+        private static JsonNamingPolicy? _kebabUpperCase;
 
         public static JsonNamingPolicy SnakeLowerCase => _snakeLowerCase ??= new JsonSimpleNamingPolicy(lowercase: true, SnakeWordBoundary);
 

@@ -9,7 +9,7 @@ namespace Yoh.Text.Json.NamingPolicies.Benchmarks
             BenchmarkRunner.Run<Benchmarks>();
 
         [Params("XMLHttpRequest")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [Benchmark]
         public string SnakeLowerCase() =>
