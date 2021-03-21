@@ -26,6 +26,10 @@ namespace Yoh.Text.Json.NamingPolicies.Tests
         [InlineData("ABC123DEF456", "abc123def456")]
         [InlineData("ABC123def456", "abc123def456")]
         [InlineData("Abc123def456", "abc123def456")]
+        [InlineData("  abc", "abc")]
+        [InlineData("abc  ", "abc")]
+        [InlineData("  abc  ", "abc")]
+        [InlineData("  abc def  ", "abc_def")]
         public void SnakeLowerCase(string input, string output) =>
             Assert.Equal(output, JsonNamingPolicies.SnakeLowerCase.ConvertName(input));
 
@@ -51,6 +55,10 @@ namespace Yoh.Text.Json.NamingPolicies.Tests
         [InlineData("ABC123DEF456", "ABC123DEF456")]
         [InlineData("ABC123def456", "ABC123DEF456")]
         [InlineData("Abc123def456", "ABC123DEF456")]
+        [InlineData("  ABC", "ABC")]
+        [InlineData("ABC  ", "ABC")]
+        [InlineData("  ABC  ", "ABC")]
+        [InlineData("  ABC def  ", "ABC_DEF")]
         public void SnakeUpperCase(string input, string output) =>
             Assert.Equal(output, JsonNamingPolicies.SnakeUpperCase.ConvertName(input));
 
@@ -76,6 +84,10 @@ namespace Yoh.Text.Json.NamingPolicies.Tests
         [InlineData("ABC123DEF456", "abc123def456")]
         [InlineData("ABC123def456", "abc123def456")]
         [InlineData("Abc123def456", "abc123def456")]
+        [InlineData("  abc", "abc")]
+        [InlineData("abc  ", "abc")]
+        [InlineData("  abc  ", "abc")]
+        [InlineData("  abc def  ", "abc-def")]
         public void KebabLowerCase(string input, string output) =>
             Assert.Equal(output, JsonNamingPolicies.KebabLowerCase.ConvertName(input));
 
@@ -101,6 +113,10 @@ namespace Yoh.Text.Json.NamingPolicies.Tests
         [InlineData("ABC123DEF456", "ABC123DEF456")]
         [InlineData("ABC123def456", "ABC123DEF456")]
         [InlineData("Abc123def456", "ABC123DEF456")]
+        [InlineData("  ABC", "ABC")]
+        [InlineData("ABC  ", "ABC")]
+        [InlineData("  ABC  ", "ABC")]
+        [InlineData("  ABC def  ", "ABC-DEF")]
         public void KebabUpperCase(string input, string output) =>
             Assert.Equal(output, JsonNamingPolicies.KebabUpperCase.ConvertName(input));
     }
