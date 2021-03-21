@@ -77,7 +77,7 @@ namespace Yoh.Text.Json.NamingPolicies
                         if (current == '_')
                         {
                             if (first == index)
-                                first = index;
+                                first = index + 1;
                             continue;
                         }
 
@@ -88,7 +88,13 @@ namespace Yoh.Text.Json.NamingPolicies
                         else
                         {
                             var next = chars[index + 1];
-                            var currentCategory = GetCategory(current);
+                            var currentCategory = char.GetUnicodeCategory(current) switch
+                            {
+                                UnicodeCategory.LowercaseLetter => CharCategory.Lowercase,
+                                UnicodeCategory.UppercaseLetter => CharCategory.Uppercase,
+                                _ => previousCategory
+                            };
+
                             if (currentCategory == CharCategory.Lowercase &&
                                 char.IsUpper(next) ||
                                 next == '_')
@@ -96,13 +102,13 @@ namespace Yoh.Text.Json.NamingPolicies
                                 WriteWord(ref result, chars[first..(index + 1)]);
 
                                 previousCategory = CharCategory.Boundary;
-                                first = index += 1;
+                                first = index + 1;
 
                                 continue;
                             }
 
                             if (previousCategory == CharCategory.Uppercase &&
-                                currentCategory == CharCategory.Uppercase &&
+                                char.IsUpper(current) &&
                                 char.IsLower(next))
                             {
                                 WriteWord(ref result, chars[first..index]);
@@ -127,14 +133,6 @@ namespace Yoh.Text.Json.NamingPolicies
 
             return name;
         }
-
-        private CharCategory GetCategory(char character) =>
-            char.GetUnicodeCategory(character) switch
-            {
-                UnicodeCategory.LowercaseLetter => CharCategory.Lowercase,
-                UnicodeCategory.UppercaseLetter => CharCategory.Uppercase,
-                _ => CharCategory.Boundary
-            };
 
         private enum CharCategory
         {
