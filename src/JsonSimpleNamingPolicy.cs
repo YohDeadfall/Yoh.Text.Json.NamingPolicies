@@ -30,11 +30,11 @@ namespace Yoh.Text.Json.NamingPolicies
                 if (word.IsEmpty)
                     return;
 
-                var required = result.IsEmpty
+                var requiredLength = result.IsEmpty
                     ? word.Length
                     : word.Length + 1;
 
-                if (required >= result.Length)
+                if (requiredLength > result.Length)
                 {
                     var bufferLength = result.Length * 2;
                     var bufferNew = ArrayPool<char>.Shared.Rent(bufferLength);
