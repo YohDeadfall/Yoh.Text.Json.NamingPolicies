@@ -53,7 +53,7 @@ namespace Yoh.Text.Json.NamingPolicies
                     resultLength += 1;
                 }
 
-                var destination = result[resultLength..];
+                var destination = result.Slice(resultLength);
                 if (_lowercase)
                 {
                     word.ToLowerInvariant(destination);
@@ -77,7 +77,7 @@ namespace Yoh.Text.Json.NamingPolicies
                     currentCategoryUnicode >= UnicodeCategory.ConnectorPunctuation &&
                     currentCategoryUnicode <= UnicodeCategory.OtherPunctuation)
                 {
-                    WriteWord(ref result, chars[first..index]);
+                    WriteWord(ref result, chars.Slice(first, index - first));
 
                     previousCategory = CharCategory.Boundary;
                     first = index + 1;
@@ -98,7 +98,7 @@ namespace Yoh.Text.Json.NamingPolicies
                     if (currentCategory == CharCategory.Lowercase && char.IsUpper(next) ||
                         next == '_')
                     {
-                        WriteWord(ref result, chars[first..(index + 1)]);
+                        WriteWord(ref result, chars.Slice(first, index - first + 1));
 
                         previousCategory = CharCategory.Boundary;
                         first = index + 1;
@@ -110,7 +110,7 @@ namespace Yoh.Text.Json.NamingPolicies
                         currentCategoryUnicode == UnicodeCategory.UppercaseLetter &&
                         char.IsLower(next))
                     {
-                        WriteWord(ref result, chars[first..index]);
+                        WriteWord(ref result, chars.Slice(first, index - first));
 
                         previousCategory = CharCategory.Boundary;
                         first = index;
@@ -122,9 +122,9 @@ namespace Yoh.Text.Json.NamingPolicies
                 }
             }
 
-            WriteWord(ref result, chars[first..]);
+            WriteWord(ref result, chars.Slice(first));
 
-            name = new string(result[..resultLength]);
+            name = result.Slice(0, resultLength).ToString();
 
             if (buffer is not null)
                 ArrayPool<char>.Shared.Return(buffer);
