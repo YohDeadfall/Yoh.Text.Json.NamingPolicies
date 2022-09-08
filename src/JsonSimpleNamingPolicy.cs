@@ -25,6 +25,23 @@ namespace Yoh.Text.Json.NamingPolicies
                 ? stackalloc char[512]
                 : buffer;
 
+            void ExpandBuffer(ref Span<char> result, int requiredLength)
+            {
+                do
+                    bufferLength *= 2;
+                while (bufferLength < resultLength + requiredLength);
+
+                var bufferNew = ArrayPool<char>.Shared.Rent(bufferLength);
+
+                result.CopyTo(bufferNew);
+
+                if (buffer is not null)
+                    ArrayPool<char>.Shared.Return(buffer);
+
+                buffer = bufferNew;
+                result = buffer;
+            }
+
             void WriteWord(ref Span<char> result, ReadOnlySpan<char> word)
             {
                 if (word.IsEmpty)
@@ -35,17 +52,7 @@ namespace Yoh.Text.Json.NamingPolicies
                     : word.Length + 1;
 
                 if (requiredLength > result.Length)
-                {
-                    var bufferLength = result.Length * 2;
-                    var bufferNew = ArrayPool<char>.Shared.Rent(bufferLength);
-
-                    result.CopyTo(bufferNew);
-
-                    if (buffer is not null)
-                        ArrayPool<char>.Shared.Return(buffer);
-
-                    buffer = bufferNew;
-                }
+                    ExpandBuffer(ref result, requiredLength);
 
                 if (resultLength != 0)
                 {
@@ -54,16 +61,10 @@ namespace Yoh.Text.Json.NamingPolicies
                 }
 
                 var destination = result.Slice(resultLength);
-                if (_lowercase)
-                {
-                    word.ToLowerInvariant(destination);
-                }
-                else
-                {
-                    word.ToUpperInvariant(destination);
-                }
 
-                resultLength += word.Length;
+                resultLength += _lowercase
+                    ? word.ToLowerInvariant(destination)
+                    : word.ToUpperInvariant(destination);
             }
 
             int first = 0;
