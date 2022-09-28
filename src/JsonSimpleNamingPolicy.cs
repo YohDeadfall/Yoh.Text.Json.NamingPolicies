@@ -8,10 +8,13 @@ namespace Yoh.Text.Json.NamingPolicies
     internal sealed class JsonSimpleNamingPolicy : JsonNamingPolicy
     {
         private readonly bool _lowercase;
-        private readonly char _boundary;
+        private readonly char _separator;
 
-        internal JsonSimpleNamingPolicy(bool lowercase, char boundary) =>
-            (_lowercase, _boundary) = (lowercase, boundary);
+        internal JsonSimpleNamingPolicy(bool lowercase, char separator)
+        {
+            _lowercase = lowercase;
+            _separator = separator;
+        }
 
         public override string ConvertName(string name)
         {
@@ -56,7 +59,7 @@ namespace Yoh.Text.Json.NamingPolicies
 
                 if (resultLength != 0)
                 {
-                    result[resultLength] = _boundary;
+                    result[resultLength] = _separator;
                     resultLength += 1;
                 }
 
