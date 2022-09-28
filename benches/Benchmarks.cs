@@ -13,18 +13,18 @@ namespace Yoh.Text.Json.NamingPolicies.Benchmarks
 
         [Benchmark]
         public string SnakeLowerCase() =>
-            JsonNamingPolicies.SnakeLowerCase.ConvertName(Name);
+            JsonNamingPolicies.SnakeCaseLower.ConvertName(Name);
 
         [Benchmark]
         public string SnakeUpperCase() =>
-            JsonNamingPolicies.SnakeUpperCase.ConvertName(Name);
+            JsonNamingPolicies.SnakeCaseUpper.ConvertName(Name);
 
         [Benchmark]
         public string KebabLowerCase() =>
-            JsonNamingPolicies.KebabLowerCase.ConvertName(Name);
+            JsonNamingPolicies.KebabCaseLower.ConvertName(Name);
 
         [Benchmark]
         public string KebabUpperCase() =>
-            JsonNamingPolicies.KebabUpperCase.ConvertName(Name);
+            JsonNamingPolicies.KebabCaseUpper.ConvertName(Name);
     }
 }
