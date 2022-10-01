@@ -5,12 +5,12 @@ using System.Text.Json;
 
 namespace Yoh.Text.Json.NamingPolicies
 {
-    internal sealed class JsonSimpleNamingPolicy : JsonNamingPolicy
+    internal abstract class JsonSeparatorNamingPolicy : JsonNamingPolicy
     {
         private readonly bool _lowercase;
         private readonly char _separator;
 
-        internal JsonSimpleNamingPolicy(bool lowercase, char separator)
+        internal JsonSeparatorNamingPolicy(bool lowercase, char separator)
         {
             _lowercase = lowercase;
             _separator = separator;
