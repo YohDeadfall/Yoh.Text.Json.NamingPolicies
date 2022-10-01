@@ -5,20 +5,17 @@ namespace Yoh.Text.Json.NamingPolicies
 {
     public static class JsonNamingPolicies
     {
-        private const char SnakeWordBoundary = '_';
-        private const char KebabWordBoundary = '-';
+        private static JsonSnakeCaseLowerNamingPolicy? _snakeCaseLower;
+        private static JsonSnakeCaseUpperNamingPolicy? _snakeCaseUpper;
+        private static JsonKebabCaseLowerNamingPolicy? _kebabCaseLower;
+        private static JsonKebabCaseUpperNamingPolicy? _kebabCaseUpper;
 
-        private static JsonNamingPolicy? _snakeCaseLower;
-        private static JsonNamingPolicy? _snakeCaseUpper;
-        private static JsonNamingPolicy? _kebabCaseLower;
-        private static JsonNamingPolicy? _kebabCaseUpper;
+        public static JsonNamingPolicy SnakeCaseLower => _snakeCaseLower ??= new JsonSnakeCaseLowerNamingPolicy();
 
-        public static JsonNamingPolicy SnakeCaseLower => _snakeCaseLower ??= new JsonSimpleNamingPolicy(lowercase: true, SnakeWordBoundary);
+        public static JsonNamingPolicy SnakeCaseUpper => _snakeCaseUpper ??= new JsonSnakeCaseUpperNamingPolicy();
 
-        public static JsonNamingPolicy SnakeCaseUpper => _snakeCaseUpper ??= new JsonSimpleNamingPolicy(lowercase: false, SnakeWordBoundary);
+        public static JsonNamingPolicy KebabCaseLower => _kebabCaseLower ??= new JsonKebabCaseLowerNamingPolicy();
 
-        public static JsonNamingPolicy KebabCaseLower => _kebabCaseLower ??= new JsonSimpleNamingPolicy(lowercase: true, KebabWordBoundary);
-
-        public static JsonNamingPolicy KebabCaseUpper => _kebabCaseUpper ??= new JsonSimpleNamingPolicy(lowercase: false, KebabWordBoundary);
+        public static JsonNamingPolicy KebabCaseUpper => _kebabCaseUpper ??= new JsonKebabCaseUpperNamingPolicy();
     }
 }
