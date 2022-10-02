@@ -1,17 +1,14 @@
-name: Build
+name: Release
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
+    tags:
+      - 'v*'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  release:
     steps:
-      - name: Checkout
+      - name: Checkout source
         uses: actions/checkout@v3
       - name: Setup .NET
         uses: actions/setup-dotnet@v2
@@ -23,7 +20,9 @@ jobs:
       - name: Test
         run: |
           dotnet test -c Release
-      - name: Formatting
+      - name: Pack
         run: |
-          dotnet tool install -g dotnet-format
-          dotnet format --verify-no-changes
+          dotnet pack -c Release -o .\pkg\
+      - name: Publish
+        run: |
+          dotnet nuget push .\pkg\* -k ${{ NUGET_KEY }} -s https://api.nuget.org/v3/index.json
