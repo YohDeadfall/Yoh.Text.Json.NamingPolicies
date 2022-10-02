@@ -25,4 +25,4 @@ jobs:
           dotnet pack -c Release -o .\pkg\
       - name: Publish
         run: |
-          dotnet nuget push .\pkg\* -k ${{ NUGET_KEY }} -s https://api.nuget.org/v3/index.json
+          dotnet nuget push .\pkg\* -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
