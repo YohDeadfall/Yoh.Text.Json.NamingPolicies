@@ -3,12 +3,13 @@ using BenchmarkDotNet.Running;
 
 namespace Yoh.Text.Json.NamingPolicies.Benchmarks
 {
+    [MemoryDiagnoser]
     public class Benchmarks
     {
         public static void Main(string[] args) =>
             BenchmarkRunner.Run<Benchmarks>();
 
-        [Params("XMLHttpRequest")]
+        [Params("XMLHttpRequest", "ATowelItSaysIsAboutTheMostMassivelyUsefulThingAnInterstellarHitchhikerCanHave_PartlyItHasGreatPracticalValue_YouCanWrapItAroundYouForWarmthAsYouBoundAcrossTheColdMoonsOfJaglanBeta_YouCanLieOnItOnTheBrilliantMarbleSandedBeachesOfSantraginusVInhalingTheHeadySeaVapors_YouCanSleepUnderItBeneathTheStarsWhichShineSoRedlyOnTheDesertWorldOfKakrafoon_UseItToSailAMiniraftDownTheSlowHeavyRiverMoth_WetItForUseInHandToHandCombat_WrapItRoundYourHeadToWardOffNoxiousFumesOrAvoidTheGazeOfTheRavenousBugblatterBeastOfTraalAMindBogglinglyStupidAnimal_ItAssumesThatIfYouCantSeeItItCantSeeYouDaftAsABrushButVeryVeryRavenous_YouCanWaveYourTowelInEmergenciesAsADistressSignalAndOfCourseDryYourselfOfWithItIfItStillSeemsToBeCleanEnough")]
         public string Name { get; set; } = string.Empty;
 
         [Benchmark]
