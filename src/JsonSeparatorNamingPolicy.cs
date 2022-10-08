@@ -28,13 +28,9 @@ namespace Yoh.Text.Json.NamingPolicies
                 ? stackalloc char[JsonConstants.StackallocCharThreshold]
                 : buffer;
 
-            void ExpandBuffer(ref Span<char> result, int requiredLength)
+            void ExpandBuffer(ref Span<char> result)
             {
-                do
-                    bufferLength *= 2;
-                while (bufferLength < resultLength + requiredLength);
-
-                var bufferNew = ArrayPool<char>.Shared.Rent(bufferLength);
+                var bufferNew = ArrayPool<char>.Shared.Rent(bufferLength *= 2);
 
                 result.CopyTo(bufferNew);
 
@@ -55,7 +51,7 @@ namespace Yoh.Text.Json.NamingPolicies
                     : word.Length + 1;
 
                 if (requiredLength > result.Length)
-                    ExpandBuffer(ref result, requiredLength);
+                    ExpandBuffer(ref result);
 
                 if (resultLength != 0)
                 {
@@ -65,9 +61,20 @@ namespace Yoh.Text.Json.NamingPolicies
 
                 var destination = result.Slice(resultLength);
 
-                resultLength += _lowercase
-                    ? word.ToLowerInvariant(destination)
-                    : word.ToUpperInvariant(destination);
+                int written;
+                while (true)
+                {
+                    written = _lowercase
+                        ? word.ToLowerInvariant(destination)
+                        : word.ToUpperInvariant(destination);
+
+                    if (written > 0)
+                        break;
+
+                    ExpandBuffer(ref result);
+                }
+
+                resultLength += written;
             }
 
             int first = 0;
