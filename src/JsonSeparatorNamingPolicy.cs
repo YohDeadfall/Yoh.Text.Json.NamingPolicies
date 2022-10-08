@@ -35,7 +35,7 @@ namespace Yoh.Text.Json.NamingPolicies
                 result.CopyTo(bufferNew);
 
                 if (buffer is not null)
-                    ArrayPool<char>.Shared.Return(buffer);
+                    ArrayPool<char>.Shared.Return(buffer, clearArray: true);
 
                 buffer = bufferNew;
                 result = buffer;
@@ -138,7 +138,7 @@ namespace Yoh.Text.Json.NamingPolicies
             name = result.Slice(0, resultLength).ToString();
 
             if (buffer is not null)
-                ArrayPool<char>.Shared.Return(buffer);
+                ArrayPool<char>.Shared.Return(buffer, clearArray: true);
 
             return name;
         }
