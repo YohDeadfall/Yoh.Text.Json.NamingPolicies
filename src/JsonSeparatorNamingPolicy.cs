@@ -19,13 +19,13 @@ namespace Yoh.Text.Json.NamingPolicies
         public override string ConvertName(string name)
         {
             var bufferLength = name.Length * 2;
-            var buffer = bufferLength > 512
+            var buffer = bufferLength > JsonConstants.StackallocCharThreshold
                 ? ArrayPool<char>.Shared.Rent(bufferLength)
                 : null;
 
             var resultLength = 0;
             Span<char> result = buffer is null
-                ? stackalloc char[512]
+                ? stackalloc char[JsonConstants.StackallocCharThreshold]
                 : buffer;
 
             void ExpandBuffer(ref Span<char> result, int requiredLength)
@@ -45,7 +45,7 @@ namespace Yoh.Text.Json.NamingPolicies
                 result = buffer;
             }
 
-            void WriteWord(ref Span<char> result, ReadOnlySpan<char> word)
+            void WriteWord(ReadOnlySpan<char> word, ref Span<char> result)
             {
                 if (word.IsEmpty)
                     return;
@@ -81,7 +81,7 @@ namespace Yoh.Text.Json.NamingPolicies
                     currentCategoryUnicode >= UnicodeCategory.ConnectorPunctuation &&
                     currentCategoryUnicode <= UnicodeCategory.OtherPunctuation)
                 {
-                    WriteWord(ref result, chars.Slice(first, index - first));
+                    WriteWord(chars.Slice(first, index - first), ref result);
 
                     previousCategory = CharCategory.Boundary;
                     first = index + 1;
@@ -102,7 +102,7 @@ namespace Yoh.Text.Json.NamingPolicies
                     if (currentCategory == CharCategory.Lowercase && char.IsUpper(next) ||
                         next == '_')
                     {
-                        WriteWord(ref result, chars.Slice(first, index - first + 1));
+                        WriteWord(chars.Slice(first, index - first + 1), ref result);
 
                         previousCategory = CharCategory.Boundary;
                         first = index + 1;
@@ -114,7 +114,7 @@ namespace Yoh.Text.Json.NamingPolicies
                         currentCategoryUnicode == UnicodeCategory.UppercaseLetter &&
                         char.IsLower(next))
                     {
-                        WriteWord(ref result, chars.Slice(first, index - first));
+                        WriteWord(chars.Slice(first, index - first), ref result);
 
                         previousCategory = CharCategory.Boundary;
                         first = index;
@@ -126,7 +126,7 @@ namespace Yoh.Text.Json.NamingPolicies
                 }
             }
 
-            WriteWord(ref result, chars.Slice(first));
+            WriteWord(chars.Slice(first), ref result);
 
             name = result.Slice(0, resultLength).ToString();
 
