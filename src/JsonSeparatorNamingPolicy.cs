@@ -18,7 +18,8 @@ namespace Yoh.Text.Json.NamingPolicies
 
         public override string ConvertName(string name)
         {
-            var bufferLength = name.Length * 2;
+            // Rented buffer 20% longer that the input.
+            var bufferLength = (12 * name.Length) / 10;
             var buffer = bufferLength > JsonConstants.StackallocCharThreshold
                 ? ArrayPool<char>.Shared.Rent(bufferLength)
                 : null;
