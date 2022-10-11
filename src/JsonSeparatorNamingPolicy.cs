@@ -47,20 +47,9 @@ namespace Yoh.Text.Json.NamingPolicies
                 if (word.IsEmpty)
                     return;
 
-                var requiredLength = result.IsEmpty
-                    ? word.Length
-                    : word.Length + 1;
-
-                if (requiredLength > result.Length)
-                    ExpandBuffer(ref result);
-
-                if (resultLength != 0)
-                {
-                    result[resultLength] = _separator;
-                    resultLength += 1;
-                }
-
-                var destination = result.Slice(resultLength);
+                var destination = result.Slice(resultLength != 0
+                    ? resultLength + 1
+                    : resultLength);
 
                 int written;
                 while (true)
@@ -73,6 +62,12 @@ namespace Yoh.Text.Json.NamingPolicies
                         break;
 
                     ExpandBuffer(ref result);
+                }
+
+                if (resultLength != 0)
+                {
+                    result[resultLength] = _separator;
+                    resultLength += 1;
                 }
 
                 resultLength += written;
