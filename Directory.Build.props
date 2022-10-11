@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>0.3.1</Version>
+    <Version>0.3.2</Version>
     <Authors>Yoh Deadfall</Authors>
     <Description>Naming policies for the system JSON serializer in .NET.</Description>
     <PackageTags>json serializer naming policy convention</PackageTags>
