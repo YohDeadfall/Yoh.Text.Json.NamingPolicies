@@ -31,17 +31,17 @@ namespace Yoh.Text.Json.NamingPolicies
 
             void ExpandBuffer(ref Span<char> result)
             {
-                var bufferNew = ArrayPool<char>.Shared.Rent(result.Length * 2);
+                var newBuffer = ArrayPool<char>.Shared.Rent(result.Length * 2);
 
-                result.CopyTo(bufferNew);
+                result.CopyTo(newBuffer);
 
                 if (rentedBuffer is not null)
                 {
                     result.Slice(0, resultLength).Clear();
-                    ArrayPool<char>.Shared.Return(rentedBuffer, clearArray: true);
+                    ArrayPool<char>.Shared.Return(rentedBuffer);
                 }
 
-                rentedBuffer = bufferNew;
+                rentedBuffer = newBuffer;
                 result = rentedBuffer;
             }
 
@@ -139,7 +139,7 @@ namespace Yoh.Text.Json.NamingPolicies
             if (rentedBuffer is not null)
             {
                 result.Slice(0, resultLength).Clear();
-                ArrayPool<char>.Shared.Return(rentedBuffer, clearArray: true);
+                ArrayPool<char>.Shared.Return(rentedBuffer);
             }
 
             return name;
