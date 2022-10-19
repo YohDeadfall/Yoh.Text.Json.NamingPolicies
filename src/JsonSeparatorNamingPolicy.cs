@@ -50,19 +50,24 @@ namespace Yoh.Text.Json.NamingPolicies
                 if (word.IsEmpty)
                     return;
 
-                var destination = result.Slice(resultLength != 0
-                    ? resultLength + 1
-                    : resultLength);
-
                 int written;
                 while (true)
                 {
-                    written = _lowercase
-                        ? word.ToLowerInvariant(destination)
-                        : word.ToUpperInvariant(destination);
+                    var destinationOffset = resultLength != 0
+                        ? resultLength + 1
+                        : resultLength;
 
-                    if (written > 0)
-                        break;
+                    if (destinationOffset < result.Length)
+                    {
+                        var destination = result.Slice(destinationOffset);
+
+                        written = _lowercase
+                            ? word.ToLowerInvariant(destination)
+                            : word.ToUpperInvariant(destination);
+
+                        if (written > 0)
+                            break;
+                    }
 
                     ExpandBuffer(ref result);
                 }
