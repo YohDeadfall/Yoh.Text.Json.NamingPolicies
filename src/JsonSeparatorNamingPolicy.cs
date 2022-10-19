@@ -24,7 +24,7 @@ namespace Yoh.Text.Json.NamingPolicies
                 ? ArrayPool<char>.Shared.Rent(rentedBufferLength)
                 : null;
 
-            var resultLength = 0;
+            var resultUsedLength = 0;
             Span<char> result = rentedBuffer is null
                 ? stackalloc char[JsonConstants.StackallocCharThreshold]
                 : rentedBuffer;
@@ -37,7 +37,7 @@ namespace Yoh.Text.Json.NamingPolicies
 
                 if (rentedBuffer is not null)
                 {
-                    result.Slice(0, resultLength).Clear();
+                    result.Slice(0, resultUsedLength).Clear();
                     ArrayPool<char>.Shared.Return(rentedBuffer);
                 }
 
@@ -53,9 +53,9 @@ namespace Yoh.Text.Json.NamingPolicies
                 int written;
                 while (true)
                 {
-                    var destinationOffset = resultLength != 0
-                        ? resultLength + 1
-                        : resultLength;
+                    var destinationOffset = resultUsedLength != 0
+                        ? resultUsedLength + 1
+                        : resultUsedLength;
 
                     if (destinationOffset < result.Length)
                     {
@@ -72,13 +72,13 @@ namespace Yoh.Text.Json.NamingPolicies
                     ExpandBuffer(ref result);
                 }
 
-                if (resultLength != 0)
+                if (resultUsedLength != 0)
                 {
-                    result[resultLength] = _separator;
-                    resultLength += 1;
+                    result[resultUsedLength] = _separator;
+                    resultUsedLength += 1;
                 }
 
-                resultLength += written;
+                resultUsedLength += written;
             }
 
             int first = 0;
@@ -139,11 +139,11 @@ namespace Yoh.Text.Json.NamingPolicies
 
             WriteWord(chars.Slice(first), ref result);
 
-            name = result.Slice(0, resultLength).ToString();
+            name = result.Slice(0, resultUsedLength).ToString();
 
             if (rentedBuffer is not null)
             {
-                result.Slice(0, resultLength).Clear();
+                result.Slice(0, resultUsedLength).Clear();
                 ArrayPool<char>.Shared.Return(rentedBuffer);
             }
 
