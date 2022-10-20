@@ -1,5 +1,7 @@
 The package provides a set of missed naming policies for the system JSON serializer in .NET.
 
+Now the policies from that package are a part of `System.Text.Json` since [a pull request](https://github.com/dotnet/runtime/pull/69613) was merged. The code is identical as well except styling. 
+
 # Snake Case
 
 Rewrites an input string changing the case of each word and connecting them using underscores. All non letter or digit characters are ignored.
