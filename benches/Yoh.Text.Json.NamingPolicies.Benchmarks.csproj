@@ -8,7 +8,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Yoh.Text.Json.NamingPolicies.csproj" />
-    <PackageReference Include="BenchmarkDotNet" Version="0.13.5" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.6" />
     <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.5"/>
   </ItemGroup>
 </Project>
