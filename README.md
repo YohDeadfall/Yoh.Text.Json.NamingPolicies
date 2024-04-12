@@ -1,6 +1,88 @@
-The package provides a set of missed naming policies for the system JSON serializer in .NET.
+The package provides a set of naming policies for the system JSON serializer in .NET which are missed or incorrectly implemented.
 
-Now the policies from that package are a part of `System.Text.Json` since [a pull request](https://github.com/dotnet/runtime/pull/69613) was merged. The code is identical as well except styling. 
+The snake and kebab policies from that package are a part of `System.Text.Json` since the moment when [this pull request](https://github.com/dotnet/runtime/pull/69613) was merged. The code is identical as well except styling.
+
+# Camel Case
+
+Rewrites an input string changing the case of each word by lower casing the first and capitalizing the rest. All non letter or digin charactwrs are ignored.
+
+```csharp
+namespace Yoh.Text.Json.NamingPolicies;
+
+public static class JsonNamingPolicies
+{
+    public static JsonNamingPolicy CamelCase { get; }
+}
+```
+
+| Input                | Output              |
+|----------------------|---------------------|
+| `XMLHttpRequest`     | `xmlHttpRequest`
+| `camelCase`          | `camelCase`
+| `camelCase`          | `camelCase`
+| `snake_case`         | `snakeCase`
+| `sNAKE_CASE`         | `snakeCase`
+| `kebab-case`         | `kebabCase`
+| `kEBAB-CASE`         | `kebabCase`
+| `double  space`      | `doubleSpace`
+| `double__underscore` | `doubleUnderscore`
+| `abc`                | `abc`
+| `abC`                | `abC`
+| `aBc`                | `aBc`
+| `aBC`                | `aBc`
+| `aBc`                | `aBc`
+| `aBC`                | `abc`
+| `abc123def456`       | `abc123def456`
+| `abc123Def456`       | `abc123Def456`
+| `abc123DEF456`       | `abc123Def456`
+| `aBC123DEF456`       | `abc123def456`
+| `aBC123def456`       | `abc123def456`
+| `abc123def456`       | `abc123def456`
+| `  ABC`              | `abc`
+| `aBC  `              | `abc`
+| `  ABC  `            | `abc`
+| `  ABC def  `        | `abcDef`
+
+# Pascal Case
+
+Rewrites an input string capitalizing each word. All non letter or digin charactwrs are ignored.
+
+```csharp
+namespace Yoh.Text.Json.NamingPolicies;
+
+public static class JsonNamingPolicies
+{
+    public static JsonNamingPolicy PascalCase { get; }
+}
+```
+
+| Input                | Output              |
+|----------------------|---------------------|
+| `XMLHttpRequest`     | `XmlHttpRequest`
+| `camelCase`          | `CamelCase`
+| `camelCase`          | `CamelCase`
+| `snake_case`         | `SnakeCase`
+| `sNAKE_CASE`         | `SnakeCase`
+| `kebab-case`         | `KebabCase`
+| `kEBAB-CASE`         | `KebabCase`
+| `double  space`      | `DoubleSpace`
+| `double__underscore` | `DoubleUnderscore`
+| `abc`                | `Abc`
+| `abC`                | `AbC`
+| `aBc`                | `ABc`
+| `aBC`                | `ABc`
+| `aBc`                | `ABc`
+| `aBC`                | `Abc`
+| `abc123def456`       | `Abc123def456`
+| `abc123Def456`       | `Abc123Def456`
+| `abc123DEF456`       | `Abc123Def456`
+| `aBC123DEF456`       | `Abc123def456`
+| `aBC123def456`       | `Abc123def456`
+| `abc123def456`       | `Abc123def456`
+| `  ABC`              | `Abc`
+| `aBC  `              | `Abc`
+| `  ABC  `            | `Abc`
+| `  ABC def  `        | `AbcDef`
 
 # Snake Case
 
