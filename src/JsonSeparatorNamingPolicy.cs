@@ -1,38 +1,37 @@
 using System;
 
-namespace Yoh.Text.Json.NamingPolicies
+namespace Yoh.Text.Json.NamingPolicies;
+
+internal abstract class JsonSeparatorNamingPolicy : JsonNamingPolicyBase
 {
-    internal abstract class JsonSeparatorNamingPolicy : JsonNamingPolicyBase
+    private readonly bool _lowercase;
+    private readonly char _separator;
+
+    internal JsonSeparatorNamingPolicy(bool lowercase, char separator)
     {
-        private readonly bool _lowercase;
-        private readonly char _separator;
+        _lowercase = lowercase;
+        _separator = separator;
+    }
 
-        internal JsonSeparatorNamingPolicy(bool lowercase, char separator)
+    protected override int TryWriteWord(bool first, ReadOnlySpan<char> word, Span<char> destination)
+    {
+        var offset = first ? 0 : 1;
+        if (offset < destination.Length)
         {
-            _lowercase = lowercase;
-            _separator = separator;
-        }
-
-        protected override int TryWriteWord(bool first, ReadOnlySpan<char> word, Span<char> destination)
-        {
-            var offset = first ? 0 : 1;
-            if (offset < destination.Length)
+            if (!first)
             {
-                if (!first)
-                {
-                    destination[0] = _separator;
-                }
-
-                destination = destination.Slice(offset);
-
-                var written = _lowercase
-                    ? word.ToLowerInvariant(destination)
-                    : word.ToUpperInvariant(destination);
-
-                return written + offset;
+                destination[0] = _separator;
             }
 
-            return 0;
+            destination = destination.Slice(offset);
+
+            var written = _lowercase
+                ? word.ToLowerInvariant(destination)
+                : word.ToUpperInvariant(destination);
+
+            return written + offset;
         }
+
+        return 0;
     }
 }
