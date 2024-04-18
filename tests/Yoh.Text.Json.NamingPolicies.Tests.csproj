@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <TargetFramework>net8</TargetFramework>
+    <TargetFrameworks>net8.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Yoh.Text.Json.NamingPolicies.csproj" />
