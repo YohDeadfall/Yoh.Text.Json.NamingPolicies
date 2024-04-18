@@ -1,6 +1,6 @@
 The package provides a set of naming policies for the system JSON serializer in .NET which are missed or incorrectly implemented.
 
-The snake and kebab policies from that package are a part of `System.Text.Json` since the moment when [this pull request](https://github.com/dotnet/runtime/pull/69613) was merged, but since [reworkin policies in .NET] to match JSON.NET there are some behavior differences between `System.Text.Json` and this package. Choose one depending on your priorities:
+The snake and kebab policies from that package are a part of `System.Text.Json` since the moment when [this pull request](https://github.com/dotnet/runtime/pull/69613) was merged, but since [reworkin policies in .NET](https://github.com/dotnet/runtime/pull/90316) to match JSON.NET there are some behavior differences between `System.Text.Json` and this package. Choose one depending on your priorities:
 
 * `Yoh.Text.Json.NamingPolicies` suits better for communications with services from other ecosystems;
 * `System.Text.Json` for compatibility with JSON.NET based services.
