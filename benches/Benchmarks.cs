@@ -13,6 +13,14 @@ public class Benchmarks
     public string Name { get; set; } = string.Empty;
 
     [Benchmark]
+    public string CamelCase() =>
+        JsonNamingPolicies.CamelCase.ConvertName(Name);
+
+    [Benchmark]
+    public string PascalCase() =>
+        JsonNamingPolicies.PascalCase.ConvertName(Name);
+
+    [Benchmark]
     public string SnakeLowerCase() =>
         JsonNamingPolicies.SnakeCaseLower.ConvertName(Name);
 
