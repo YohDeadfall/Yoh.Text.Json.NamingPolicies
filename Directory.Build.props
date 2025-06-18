@@ -1,11 +1,11 @@
 <Project>
   <PropertyGroup>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
     <Authors>Yoh Deadfall</Authors>
     <Description>Naming policies for the system JSON serializer in .NET.</Description>
     <PackageTags>json serializer naming policy convention</PackageTags>
 
-    <Copyright>Copyright 2024 © Yoh Deadfall</Copyright>
+    <Copyright>Copyright 2025 © Yoh Deadfall</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/YohDeadfall/Yoh.Text.Json.NamingPolicies</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
